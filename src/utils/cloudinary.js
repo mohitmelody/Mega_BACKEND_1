@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from " cloudianry"
 import fs from 'fs'
-
+// use karne ke liye config karna padta hai 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
