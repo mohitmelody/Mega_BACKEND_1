@@ -120,7 +120,7 @@ const loginUser = asynchandler(async (req, res) => {
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
 
     // cookies me kya kya bhejna hai 
-    const loggedinUser = await User.findById(user._id).select("password -refreshToken")
+    const loggedinUser = await User.findById(user._id).select("-password -refreshToken")
 
 
     // this code means it modify by server only
