@@ -73,7 +73,7 @@ UserSchema.methods.generateAccessToken = function () {
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-            expiryIn : process.env.ACCESS_TOKEN_EXPIRY
+            expiryIn: process.env.ACCESS_TOKEN_EXPIRY
         }
     )
 }
@@ -90,7 +90,7 @@ UserSchema.methods.generateRefreshToken = function () {
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
-            expiryIn : process.env.REFRESH_TOKEN_EXPIRY
+            expiryIn: process.env.REFRESH_TOKEN_EXPIRY
         }
     )
 

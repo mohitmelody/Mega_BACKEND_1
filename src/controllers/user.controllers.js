@@ -5,18 +5,18 @@ import { ApiResponse } from '../utils/ApiResponse.js'
 import { ApiError } from "../utils/ApiError.js"
 import { User } from "../Models/user.models.js"
 
+// get user details by frontend
+// validation - not empty
+// check if user already  exists : username , email
+// check for images , check for avatar
+// upload them to cloudinary , avatar
+// user object - create entery in db 
+// remove password and refersh token fild for response 
+// check for user creation 
+// get user details by frontend
 
 const registerUser = asynchandler(async (req, res) => {
-    // get user details by frontend
-    // validation - not empty
-    // check if user already  exists : username , email
-    // check for images , check for avatar
-    // upload them to cloudinary , avatar
-    // user object - create entery in db 
-    // remove password and refersh token fild for response 
 
-    // check for user creation 
-    // get user details by frontend
     const { username, email, password, fullName } = req.body
     console.log(`${username} ,${email} ,${password},${fullName}`)
     // if(fullName === ""){
@@ -90,17 +90,14 @@ const generateAccessAndRefreshToken = async (userId) => {
         throw new ApiError(500, "something went wrong while generating refersh token and access token ")
     }
 }
-
+// req.body se data 
+// username and email both valid hai nahi 
+//find the user 
+//password check
+// access and refreshtoken 
+//send cookies 
 const loginUser = asynchandler(async (req, res) => {
-    // req.body se data 
-    // username and email both valid hai nahi 
-    //find the user 
-    //password check
-    // access and refreshtoken 
-    //send cookies 
 
-
-    // req.body se data 
     const { email, username, password } = req.body
     if (!username && !email) {
         throw new ApiError(400, "username or email is required ")
@@ -218,9 +215,28 @@ const refreshAccesstoken = asynchandler(async (req, res) => {
 
 })
 
+const changeCurrentPassword = asynchandler(async(req,res)=>{
+    const {oldPassword, newPassword} = req.body
+    const user = User.findById(req.user?.id)
+    await user.isPasswordCorrect(oldPassword)
+
+    if (!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid old password")
+    }
+    user.password = newPassword
+    await user.save({validateBeforeSave: false})
+
+    
+    return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password changed successfully"))
+})
+
+
 
 export {
     registerUser,
     loginUser,
-    loggOutUser
+    loggOutUser,
+    changeCurrentPassword,
 }
