@@ -176,45 +176,45 @@ const loggOutUser = asynchandler(async (req, res) => {
 const refreshAccesstoken = asynchandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
-    if (incomingRefreshToken) {
+    if (!incomingRefreshToken) {
         throw new ApiError(401, "unauthorizes error")
     }
-   try{
-    const decodedtoken = jwt.verify(
-        incomingRefreshToken,
-        process.env.REFRESH_TOKEN_SECRET
-    )
-    const user = User.find(decodedtoken?._id)
-    if (!user) {
-        throw new ApiError(401, "unauthorized error ")
-  
-  
-    }
-    if(incomingRefreshToken !== user?.refreshToken){
-        throw new ApiError(401,"refresh token is expired or user  ")
-    }
-    const options = {
-        httpOnly: true,
-        secure: true
+    try {
+        const decodedtoken = jwt.verify(
+            incomingRefreshToken,
+            process.env.REFRESH_TOKEN_SECRET
+        )
+        const user = User.find(decodedtoken?._id)
+        if (!user) {
+            throw new ApiError(401, "unauthorized error ")
+
+
+        }
+        if (incomingRefreshToken !== user?.refreshToken) {
+            throw new ApiError(401, "refresh token is expired or user  ")
+        }
+        const options = {
+            httpOnly: true,
+            secure: true
+
+        }
+        await generateAccessAndRefreshToken(user._id)
+        return res
+            .status(200)
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", newRefreshToken, options)
+            .json(
+                new ApiResponse(
+                    200,
+                    { accessToken, refreshToken: newRefreshToken },
+                    "Access token refreshed"
+                ),
+            )
+    } catch (error) {
+        throw new ApiError(401, error?.message || "Invalid refresh token")
 
     }
-     await generateAccessAndRefreshToken(user._id)
-     return res
-     .status(200)
-     .cookie("accessToken", accessToken, options)
-     .cookie("refreshToken", newRefreshToken, options)
-     .json(
-         new ApiResponse(
-             200, 
-             {accessToken, refreshToken: newRefreshToken},
-             "Access token refreshed"
-         ),
-     )
-   }catch(error){
-    throw new ApiError(401, error?.message || "Invalid refresh token")
 
-   }
-    
 
 })
 
