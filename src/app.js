@@ -1,24 +1,35 @@
-import express from 'express'
-import cors from 'cors'
-import cookieParser from 'cookie-parser'
-const app = express()
-app.use((cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-})))
-app.use(express.static('public'))
-app.use(express.json({ limit: '16kb' }))
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
-// routes import 
+// Import necessary modules
+import express from 'express'; // Express framework
+import cors from 'cors'; // Cross-origin resource sharing middleware
+import cookieParser from 'cookie-parser'; // Middleware for handling cookies
 
-import userRouter from "./routes/user.routes.js"
+// Create an Express app
+const app = express();
 
-// routes declaration
+// Enable CORS with specified origin and credentials
+app.use(cors({
+    origin: process.env.CORS_ORIGIN, // Set the allowed origin (e.g., http://example.com)
+    credentials: true, // Allow credentials (cookies, authorization headers) to be sent
+}));
 
-app.use("/api/v1/users", userRouter)
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
 
+// Parse JSON requests (limiting request size to 16KB)
+app.use(express.json({ limit: '16kb' }));
 
-// http://localhost:8080/api/v1/users/register
-export { app }
+// Parse URL-encoded requests
+app.use(express.urlencoded({ extended: true }));
 
+// Parse cookies
+app.use(cookieParser());
+
+// Import user routes
+import userRouter from "./routes/user.routes.js"; // Adjust the actual path as needed
+
+// Declare user-related routes
+app.use("/api/v1/users", userRouter); // Mount the userRouter under the specified path
+
+// Example route: http://localhost:8080/api/v1/users/register
+// Export the Express app
+export { app };

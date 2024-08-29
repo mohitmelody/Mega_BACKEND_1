@@ -1,24 +1,26 @@
 import mongoose from "mongoose";
-import {DB_NAME} from "../constants.js"
+import { DB_NAME } from "../constants.js"; // Assuming you have a constants file with the database name
 
-
-const connectDB = async()=>{
-  try{
-   const connectionInstance =  await mongoose.connect(`${process.env.MONGODB_URL}/${DB_NAME}`)
+// Establish a connection to MongoDB
+const connectDB = async () => {
+  try {
+    const connectionInstance = await mongoose.connect(
+      `${process.env.MONGODB_URL}/${DB_NAME}`
+    );
     console.log("Database connection successful");
-    console.log(`\n MongoDB  connection !! DB host:  ${connectionInstance.connection.host}`)
-    
-  }catch(error){
-    console.log(error)
-    console.log("database connection failed")
-    process.exit(1)
+    console.log(`MongoDB connection! Host: ${connectionInstance.connection.host}`);
+  } catch (error) {
+    console.error(error);
+    console.log("Database connection failed");
+    process.exit(1); // Exit the process if there's an error
   }
+};
 
-       
-    }
- export default connectDB
+export default connectDB;
 
- // require('dotenv').config()
+
+// setup database connection by require connection 
+// require('dotenv').config()
 // const connectDB = async()=>{
 //     await mongoose.connect(`${process.env.MONDB_URL}$/{DB_NAME}`, {
 //         useNewUrlParser: true,
@@ -27,12 +29,12 @@ const connectDB = async()=>{
 //     .then(()=>{
 //         console.log("Database connection successful");
 //     })
-//         .catch(()=>{
+//      .catch(()=>{
 //             console.log(err)
 //             process.exit(1)
 //         })
        
-//     }
+//  }
 
 
 
