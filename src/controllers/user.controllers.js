@@ -40,6 +40,7 @@ const registerUser = asynchandler(async (req, res) => {
         throw new ApiError(409, " your are already register")
     }
     // check for images , check for avatar
+    // middleware bhi kuch method deta hai like request body ke andhar kuch extra field dalta hai 
     const avatarloacalPath = req.files?.avatar[0]?.path
     const coverImagelocalapth = req.files?.coverImage[0]?.path
 
