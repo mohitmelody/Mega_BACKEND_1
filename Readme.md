@@ -1,6 +1,7 @@
 # Mega Backend: A Powerful Node.js Backend with Express and MongoDB
 Welcome to Mega Backend, a robust and feature-packed backend solution built using Node.js and Express. Whether you’re developing a web application, mobile app, or any other project that requires a solid backend foundation, Mega Backend has got you covered.
 
+
 # Features
 #Express Framework: We’ve leveraged the popular Express.js framework to create a flexible and efficient server.
 
@@ -13,8 +14,6 @@ Welcome to Mega Backend, a robust and feature-packed backend solution built usin
 #Cookie Management: We’ve included cookie handling for session management and user authentication.
 
 #Cloud Storage with Cloudinary: Store and manage your media files in the cloud using Cloudinary. It’s reliable, scalable, and easy to integrate.
-
-
 
 
 # Getting Started
@@ -31,11 +30,3 @@ Welcome to Mega Backend, a robust and feature-packed backend solution built usin
 
 
 
-# API Routes
-#/api/auth: Authentication routes (login, register, logout)
-
-#/api/users: User-related routes (profile, update, delete)
-
-#/api/uploads: File upload endpoints
-
-#Customize and expand these routes to fit your project requirements.
